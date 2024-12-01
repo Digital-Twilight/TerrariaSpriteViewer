@@ -4,29 +4,19 @@
 
 This program is designed to view sprites from the game Terraria. It simplifies the process of creating textures, as you no longer need to open Terraria every time to see how a new texture looks.
 
-<p align="center"><img src="https://github.com/Digital-Twilight/TerrariaSpriteViewer/blob/master/demo.gif?raw=true)"/></p>
+<p align="center"><img src="https://github.com/user-attachments/assets/a7434648-53ae-4276-9a2d-8a22ff2694f2?raw=true)"/></p>
 
 # Setup Instructions
-1) Create a folder named <code>Images</code> in the same directory as the executable file. Inside the <code>Images</code> folder, create a subfolder named <code>Armor</code>.
+1) Open the program.
 
-    The structure should look like this:
-    ```
-    - SpriteViewer.exe
-    - Images
-      - Armor
-        ...
-      ...
-    ...
-    ```
-    <code>(This matches the texture pack structure in Terraria)</code>
+2) Select Terraria's texture pack folder.
 
-3) Ensure the Images folder contains the following files:
+3) Ensure the <code>Images</code> folder contains the following files:
     ```
     Player_0_0.png
     Player_0_7.png
     Player_0_10.png
     ```
-3) Open the program.
 
 4) That's it! Everything is ready to go!
 
@@ -36,6 +26,8 @@ This program is designed to view sprites from the game Terraria. It simplifies t
 - Select animations and control their speed.
 
 - Enable or disable armor visibility.
+
+- You can choose which texture pack you want to view.
 
 - Update sprite files without leaving the program!
 
