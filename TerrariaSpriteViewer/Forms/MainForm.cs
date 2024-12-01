@@ -122,13 +122,13 @@ namespace TerrariaSpriteViewer
             Bitmap HeadSprite = new Bitmap(FrameSize.Width, FrameSize.Height, Head.PixelFormat);
             using (Graphics g = Graphics.FromImage(HeadSprite))
             {
-                g.DrawImage(Head.Clone(HeadFrame, Head.PixelFormat), 0, 0);
+                g.DrawImage(Head.Clone(HeadFrame, Head.PixelFormat), 0, 0, FrameSize.Width, FrameSize.Height - 2);
             }
             Bitmap ArmorHeadSprite = new Bitmap(FrameSize.Width, FrameSize.Height, Head.PixelFormat);
             using (Graphics g = Graphics.FromImage(ArmorHeadSprite))
             {
                 if (ArmorHead != null && ArmorVisible == true)
-                    g.DrawImage(ArmorHead.Clone(HeadFrame, Head.PixelFormat), 0, 0);
+                    g.DrawImage(ArmorHead.Clone(HeadFrame, Head.PixelFormat), 0, 0, FrameSize.Width, FrameSize.Height - 2);
             }
             using (Graphics g = Graphics.FromImage(PlayerSprite))
             {
