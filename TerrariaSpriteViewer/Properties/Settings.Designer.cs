@@ -81,5 +81,17 @@ namespace TerrariaSpriteViewer.Properties {
                 this["SelectedFrameTime"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SelectedTexturePack {
+            get {
+                return ((string)(this["SelectedTexturePack"]));
+            }
+            set {
+                this["SelectedTexturePack"] = value;
+            }
+        }
     }
 }

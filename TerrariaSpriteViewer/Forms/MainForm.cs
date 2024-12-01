@@ -12,6 +12,7 @@ namespace TerrariaSpriteViewer
 {
     public partial class MainForm : Form
     {
+        private string TexturePackFolder;
         private Bitmap Head;
         private Bitmap Body;
         private Bitmap Legs;
@@ -37,36 +38,33 @@ namespace TerrariaSpriteViewer
         private List<Point> MiningAnimation;
         private Timer AnimationTimer;
         private bool isAnimating = false;
+        private bool isSpritesLoaded = false;
 
         public MainForm()
         {
             InitializeComponent();
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private void Load_Sprites()
         {
-            if (!File.Exists(@"Images\Player_0_0.png") || !File.Exists(@"Images\Player_0_7.png") || !File.Exists(@"Images\Player_0_10.png"))
+            if (!File.Exists(TexturePackFolder + @"Images\Player_0_0.png") || !File.Exists(TexturePackFolder + @"Images\Player_0_7.png") || !File.Exists(TexturePackFolder + @"Images\Player_0_10.png"))
             {
                 MessageBox.Show(this, "One or more player sprite files were not found", "Missing files!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Close();
+                return;
             }
             else
             {
-                Head = new Bitmap(@"Images\Player_0_0.png");
-                Body = new Bitmap(@"Images\Player_0_7.png");
-                Legs = new Bitmap(@"Images\Player_0_10.png");
+                Head = new Bitmap(TexturePackFolder + @"Images\Player_0_0.png");
+                Body = new Bitmap(TexturePackFolder + @"Images\Player_0_7.png");
+                Legs = new Bitmap(TexturePackFolder + @"Images\Player_0_10.png");
             }
-
-            AnimationTimer = new Timer { Interval = 100 };
-            AnimationTimer.Tick += UpdateAnimation;
-
-            DirectoryInfo ArmorFolder = new DirectoryInfo(@"Images\Armor");
+            DirectoryInfo ArmorFolder = new DirectoryInfo(TexturePackFolder + @"Images\Armor");
             List<string> ArmorFiles = new List<string>();
             foreach (FileInfo file in ArmorFolder.GetFiles())
                 ArmorFiles.Add(file.Name);
             ArmorBodySelector.Items.AddRange(ArmorFiles.Cast<string>().OrderBy(x => int.Parse(Regex.Match(x, @"\d+").Value)).ToArray());
 
-            DirectoryInfo ImagesFolder = new DirectoryInfo(@"Images");
+            DirectoryInfo ImagesFolder = new DirectoryInfo(TexturePackFolder + @"Images");
             List<string> HeadArmorFiles = new List<string>();
             List<string> LegsArmorFiles = new List<string>();
             foreach (FileInfo file in ImagesFolder.GetFiles())
@@ -85,6 +83,19 @@ namespace TerrariaSpriteViewer
             if (ArmorLegsSelector.Items.Contains(Settings.Default["SelectedArmorLegs"]))
                 ArmorLegsSelector.SelectedIndex = ArmorLegsSelector.Items.IndexOf(Settings.Default["SelectedArmorLegs"]);
             FrameTimeTrackbar.Value = (int)Settings.Default["SelectedFrameTime"];
+            isSpritesLoaded = true;
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            AnimationTimer = new Timer { Interval = 100 };
+            AnimationTimer.Tick += UpdateAnimation;
+            if (!string.IsNullOrWhiteSpace((string)Settings.Default["SelectedTexturePack"]))
+            {
+                TexturePackFolder = (string)Settings.Default["SelectedTexturePack"];
+                TexturePackTextBox.Text = new DirectoryInfo(TexturePackFolder).Parent.FullName;
+                Load_Sprites();
+            }
             RunningAnimation = new List<Point>() { new Point(3, 3), new Point(4, 3), new Point(3, 3), new Point(5, 3), new Point(6, 3), new Point(5, 3) };
             MiningAnimation = new List<Point>() { new Point(3, 2), new Point(4, 2), new Point(5, 2) };
             FrameSize = new Size(40, 56);
@@ -94,8 +105,10 @@ namespace TerrariaSpriteViewer
             FrameCountLegs = 0;
             EnlargedImage = new Rectangle(0, 0, FrameSize.Width * 5, FrameSize.Height * 5);
             AnimationTypeComboBox.SelectedIndex = 0;
-            SpritePictureBox.BackColor = (Color)Settings.Default["SelectedBackgroundColor"];
-            RenderPlayer();
+            if (Settings.Default["SelectedBackgroundColor"] != null)
+                SpritePictureBox.BackColor = (Color)Settings.Default["SelectedBackgroundColor"];
+            if (isSpritesLoaded)
+                RenderPlayer();
         }
 
         private void RenderPlayer()
@@ -268,11 +281,17 @@ namespace TerrariaSpriteViewer
                     ShouldersVisible = true;
                     break;
             }
-            RenderPlayer();
+            if (isSpritesLoaded)
+                RenderPlayer();
         }
 
         private void StartAnimation(object sender, EventArgs e)
         {
+            if (!isSpritesLoaded)
+            {
+                MessageBox.Show(this, "You need to select the texture pack folder first!", "Missing files!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (!isAnimating)
             {
                 isAnimating = true;
@@ -296,6 +315,11 @@ namespace TerrariaSpriteViewer
 
         private void ArmorToggleButton_Click(object sender, EventArgs e)
         {
+            if (!isSpritesLoaded)
+            {
+                MessageBox.Show(this, "You need to select the texture pack folder first!", "Missing files!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             ArmorVisible = !ArmorVisible;
             RenderPlayer();
         }
@@ -312,19 +336,19 @@ namespace TerrariaSpriteViewer
 
         private void ArmorHeadSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ArmorHead = new Bitmap($@"Images\{ArmorHeadSelector.Text}");
+            ArmorHead = new Bitmap(TexturePackFolder + $@"Images\{ArmorHeadSelector.Text}");
             Settings.Default["SelectedArmorHead"] = ArmorHeadSelector.Text;
         }
 
         private void ArmorBodySelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ArmorBody = new Bitmap($@"Images\Armor\{ArmorBodySelector.Text}");
+            ArmorBody = new Bitmap(TexturePackFolder + $@"Images\Armor\{ArmorBodySelector.Text}");
             Settings.Default["SelectedArmorBody"] = ArmorBodySelector.Text;
         }
 
         private void ArmorLegsSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ArmorLegs = new Bitmap($@"Images\{ArmorLegsSelector.Text}");
+            ArmorLegs = new Bitmap(TexturePackFolder + $@"Images\{ArmorLegsSelector.Text}");
             Settings.Default["SelectedArmorLegs"] = ArmorLegsSelector.Text;
         }
 
@@ -336,13 +360,18 @@ namespace TerrariaSpriteViewer
 
         private void ReloadFilesButton_Click(object sender, EventArgs e)
         {
-            DirectoryInfo ArmorFolder = new DirectoryInfo(@"Images\Armor");
+            if (!isSpritesLoaded)
+            {
+                MessageBox.Show(this, "You need to select the texture pack folder first!", "Missing files!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            DirectoryInfo ArmorFolder = new DirectoryInfo(TexturePackFolder + @"Images\Armor");
             List<string> ArmorFiles = new List<string>();
             foreach (FileInfo file in ArmorFolder.GetFiles())
                 ArmorFiles.Add(file.Name);
             ArmorBodySelector.Items.AddRange(ArmorFiles.Cast<string>().OrderBy(x => int.Parse(Regex.Match(x, @"\d+").Value)).ToArray());
 
-            DirectoryInfo ImagesFolder = new DirectoryInfo(@"Images");
+            DirectoryInfo ImagesFolder = new DirectoryInfo(TexturePackFolder + @"Images");
             List<string> HeadArmorFiles = new List<string>();
             List<string> LegsArmorFiles = new List<string>();
             foreach (FileInfo file in ImagesFolder.GetFiles())
@@ -354,14 +383,28 @@ namespace TerrariaSpriteViewer
             }
             ArmorHeadSelector.Items.AddRange(HeadArmorFiles.Cast<string>().OrderBy(x => int.Parse(Regex.Match(x, @"\d+").Value)).ToArray());
             ArmorLegsSelector.Items.AddRange(LegsArmorFiles.Cast<string>().OrderBy(x => int.Parse(Regex.Match(x, @"\d+").Value)).ToArray());
-            ArmorHead = new Bitmap($@"Images\{ArmorHeadSelector.Text}");
-            ArmorBody = new Bitmap($@"Images\Armor\{ArmorBodySelector.Text}");
-            ArmorLegs = new Bitmap($@"Images\{ArmorLegsSelector.Text}");
+            ArmorHead = new Bitmap(TexturePackFolder + $@"Images\{ArmorHeadSelector.Text}");
+            ArmorBody = new Bitmap(TexturePackFolder + $@"Images\Armor\{ArmorBodySelector.Text}");
+            ArmorLegs = new Bitmap(TexturePackFolder + $@"Images\{ArmorLegsSelector.Text}");
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Settings.Default.Save();
+        }
+
+        private void SelectTexturePackButton_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+            folderBrowserDialog.Description = "Select the folder containing the texture pack for Terraria";
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                TexturePackTextBox.Text = folderBrowserDialog.SelectedPath;
+                TexturePackFolder = folderBrowserDialog.SelectedPath + @"\Content\";
+                Settings.Default["SelectedTexturePack"] = TexturePackFolder;
+                isSpritesLoaded = false;
+                Load_Sprites();
+            }
         }
     }
 }
