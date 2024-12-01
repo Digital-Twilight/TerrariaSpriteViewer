@@ -395,6 +395,9 @@ namespace TerrariaSpriteViewer
 
         private void SelectTexturePackButton_Click(object sender, EventArgs e)
         {
+            ArmorHeadSelector.Items.Clear();
+            ArmorBodySelector.Items.Clear();
+            ArmorLegsSelector.Items.Clear();
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
             folderBrowserDialog.Description = "Select the folder containing the texture pack for Terraria";
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
