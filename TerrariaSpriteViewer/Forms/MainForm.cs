@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using TerrariaSpriteViewer.Classes;
 using TerrariaSpriteViewer.Properties;
 
 namespace TerrariaSpriteViewer
@@ -27,6 +28,9 @@ namespace TerrariaSpriteViewer
         private int FrameCounter = 0;
         private bool ShouldersVisible = true;
         private bool ArmorVisible = true;
+        private bool HeadVisible = true;
+        private bool BodyVisible = true;
+        private bool LegsVisible = true;
         private Rectangle HeadFrame;
         private Rectangle BodyFrame;
         private Rectangle BaseBodyFrame;
@@ -54,9 +58,9 @@ namespace TerrariaSpriteViewer
             }
             else
             {
-                Head = new Bitmap(TexturePackFolder + @"Images\Player_0_0.png");
-                Body = new Bitmap(TexturePackFolder + @"Images\Player_0_7.png");
-                Legs = new Bitmap(TexturePackFolder + @"Images\Player_0_10.png");
+                Head = Utility.LoadBitmapNoLock(TexturePackFolder + @"Images\Player_0_0.png");
+                Body = Utility.LoadBitmapNoLock(TexturePackFolder + @"Images\Player_0_7.png");
+                Legs = Utility.LoadBitmapNoLock(TexturePackFolder + @"Images\Player_0_10.png");
             }
             DirectoryInfo ArmorFolder = new DirectoryInfo(TexturePackFolder + @"Images\Armor");
             List<string> ArmorFiles = new List<string>();
@@ -151,24 +155,24 @@ namespace TerrariaSpriteViewer
                 }
                 g.DrawImage(Body.Clone(BaseBodyFrame, Body.PixelFormat), EnlargedImage); // That's base of the body
                 g.DrawImage(Body.Clone(BodyFrame, Body.PixelFormat), EnlargedImage); // Boobs :)
-                if (ShouldersVisible && ArmorBody != null && ArmorVisible == true)
+                if (ShouldersVisible && ArmorBody != null && ArmorVisible == true && BodyVisible == true)
                     g.DrawImage(ArmorBody.Clone(new Rectangle(FrameSize.Width * 1, FrameSize.Height * 3, FrameSize.Width, FrameSize.Height), Body.PixelFormat), EnlargedImage); // Further shoulder
-                if (ArmorBody != null && ArmorVisible == true)
+                if (ArmorBody != null && ArmorVisible == true && BodyVisible == true)
                     g.DrawImage(ArmorBody.Clone(BodyFrame, Body.PixelFormat), EnlargedImage); // Boobs with armor
                 g.DrawImage(Legs.Clone(LegsFrame, Head.PixelFormat), new Rectangle(0, 0, FrameSize.Width * 5, FrameSize.Height * 5)); // Legs
-                if (ArmorLegs != null && ArmorVisible == true)
+                if (ArmorLegs != null && ArmorVisible == true && LegsVisible == true)
                     g.DrawImage(ArmorLegs.Clone(LegsFrame, Head.PixelFormat), new Rectangle(0, 0, FrameSize.Width * 5, FrameSize.Height * 5)); // Armor legs
-                if (ArmorBody != null && ArmorVisible == true)
+                if (ArmorBody != null && ArmorVisible == true && BodyVisible == true)
                     g.DrawImage(ArmorBody.Clone(BaseBodyFrame, Body.PixelFormat), EnlargedImage); // Armor body base
                 g.DrawImage(HeadSprite, new Rectangle(0, 0, FrameSize.Width * 5, FrameSize.Height * 5)); // Head
-                if (ArmorHead != null && ArmorVisible == true)
+                if (ArmorHead != null && ArmorVisible == true && HeadVisible == true)
                     g.DrawImage(ArmorHeadSprite, new Rectangle(0, 0, FrameSize.Width * 5, FrameSize.Height * 5)); // Armor head
-                if ((FrameCountArm == new Point(4, 0) || FrameCountArm == new Point(3, 0)) && ShouldersVisible && ArmorBody != null)
+                if ((FrameCountArm == new Point(4, 0) || FrameCountArm == new Point(3, 0)) && ShouldersVisible && ArmorBody != null && BodyVisible == true)
                     g.DrawImage(ArmorBody.Clone(new Rectangle(FrameSize.Width * 0, FrameSize.Height * 3, FrameSize.Width, FrameSize.Height), Body.PixelFormat), EnlargedImage); // Nearest shoulder
                 g.DrawImage(Body.Clone(ArmsFrame, Body.PixelFormat), EnlargedImage); // Arm
-                if (ArmorBody != null && ArmorVisible == true)
+                if (ArmorBody != null && ArmorVisible == true && BodyVisible == true)
                     g.DrawImage(ArmorBody.Clone(ArmsFrame, Body.PixelFormat), EnlargedImage); // Armor arm
-                if (FrameCountArm != new Point(4, 0) && FrameCountArm != new Point(3, 0) && ShouldersVisible && ArmorBody != null && ArmorVisible == true)
+                if (FrameCountArm != new Point(4, 0) && FrameCountArm != new Point(3, 0) && ShouldersVisible && ArmorBody != null && ArmorVisible == true && BodyVisible == true)
                     g.DrawImage(ArmorBody.Clone(new Rectangle(FrameSize.Width * 0, FrameSize.Height * 3, FrameSize.Width, FrameSize.Height), Body.PixelFormat), EnlargedImage); // Nearest shoulder
             }
             SpritePictureBox.Image = PlayerSprite;
@@ -336,19 +340,19 @@ namespace TerrariaSpriteViewer
 
         private void ArmorHeadSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ArmorHead = new Bitmap(TexturePackFolder + $@"Images\{ArmorHeadSelector.Text}");
+            ArmorHead = Utility.LoadBitmapNoLock(TexturePackFolder + $@"Images\{ArmorHeadSelector.Text}");
             Settings.Default["SelectedArmorHead"] = ArmorHeadSelector.Text;
         }
 
         private void ArmorBodySelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ArmorBody = new Bitmap(TexturePackFolder + $@"Images\Armor\{ArmorBodySelector.Text}");
+            ArmorBody = Utility.LoadBitmapNoLock(TexturePackFolder + $@"Images\Armor\{ArmorBodySelector.Text}");
             Settings.Default["SelectedArmorBody"] = ArmorBodySelector.Text;
         }
 
         private void ArmorLegsSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ArmorLegs = new Bitmap(TexturePackFolder + $@"Images\{ArmorLegsSelector.Text}");
+            ArmorLegs = Utility.LoadBitmapNoLock(TexturePackFolder + $@"Images\{ArmorLegsSelector.Text}");
             Settings.Default["SelectedArmorLegs"] = ArmorLegsSelector.Text;
         }
 
@@ -365,6 +369,9 @@ namespace TerrariaSpriteViewer
                 MessageBox.Show(this, "You need to select the texture pack folder first!", "Missing files!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            ArmorHeadSelector.Items.Clear();
+            ArmorBodySelector.Items.Clear();
+            ArmorLegsSelector.Items.Clear();
             DirectoryInfo ArmorFolder = new DirectoryInfo(TexturePackFolder + @"Images\Armor");
             List<string> ArmorFiles = new List<string>();
             foreach (FileInfo file in ArmorFolder.GetFiles())
@@ -383,9 +390,6 @@ namespace TerrariaSpriteViewer
             }
             ArmorHeadSelector.Items.AddRange(HeadArmorFiles.Cast<string>().OrderBy(x => int.Parse(Regex.Match(x, @"\d+").Value)).ToArray());
             ArmorLegsSelector.Items.AddRange(LegsArmorFiles.Cast<string>().OrderBy(x => int.Parse(Regex.Match(x, @"\d+").Value)).ToArray());
-            ArmorHead = new Bitmap(TexturePackFolder + $@"Images\{ArmorHeadSelector.Text}");
-            ArmorBody = new Bitmap(TexturePackFolder + $@"Images\Armor\{ArmorBodySelector.Text}");
-            ArmorLegs = new Bitmap(TexturePackFolder + $@"Images\{ArmorLegsSelector.Text}");
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -408,6 +412,28 @@ namespace TerrariaSpriteViewer
                 isSpritesLoaded = false;
                 Load_Sprites();
             }
+        }
+
+        private void ArmorHeadButton_Click(object sender, EventArgs e)
+        {
+            HeadVisible = !HeadVisible;
+        }
+
+        private void ArmorBodyButton_Click(object sender, EventArgs e)
+        {
+            BodyVisible = !BodyVisible;
+        }
+
+        private void ArmorLegsButton_Click(object sender, EventArgs e)
+        {
+            LegsVisible = !LegsVisible;
+        }
+
+        private void RefreshButton_Click(object sender, EventArgs e)
+        {
+            ArmorHead = Utility.LoadBitmapNoLock(TexturePackFolder + $@"Images\{ArmorHeadSelector.Text}");
+            ArmorBody = Utility.LoadBitmapNoLock(TexturePackFolder + $@"Images\Armor\{ArmorBodySelector.Text}");
+            ArmorLegs = Utility.LoadBitmapNoLock(TexturePackFolder + $@"Images\{ArmorLegsSelector.Text}");
         }
     }
 }

@@ -44,11 +44,15 @@ namespace TerrariaSpriteViewer
             this.label4 = new System.Windows.Forms.Label();
             this.ChangeBackgroundButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.FrameTimeTrackbar = new TerrariaSpriteViewer.Classes.NoFocusTrackBar();
             this.ReloadFilesButton = new System.Windows.Forms.Button();
             this.TexturePackTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.SelectTexturePackButton = new System.Windows.Forms.Button();
+            this.ArmorHeadButton = new System.Windows.Forms.Button();
+            this.ArmorBodyButton = new System.Windows.Forms.Button();
+            this.ArmorLegsButton = new System.Windows.Forms.Button();
+            this.RefreshButton = new System.Windows.Forms.Button();
+            this.FrameTimeTrackbar = new TerrariaSpriteViewer.Classes.NoFocusTrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.SpritePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FrameTimeTrackbar)).BeginInit();
             this.SuspendLayout();
@@ -59,7 +63,7 @@ namespace TerrariaSpriteViewer
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SpritePictureBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.SpritePictureBox.Location = new System.Drawing.Point(12, 270);
+            this.SpritePictureBox.Location = new System.Drawing.Point(12, 299);
             this.SpritePictureBox.MaximumSize = new System.Drawing.Size(200, 280);
             this.SpritePictureBox.MinimumSize = new System.Drawing.Size(200, 280);
             this.SpritePictureBox.Name = "SpritePictureBox";
@@ -70,7 +74,7 @@ namespace TerrariaSpriteViewer
             // 
             // ArmorToggleButton
             // 
-            this.ArmorToggleButton.Location = new System.Drawing.Point(12, 52);
+            this.ArmorToggleButton.Location = new System.Drawing.Point(12, 51);
             this.ArmorToggleButton.Name = "ArmorToggleButton";
             this.ArmorToggleButton.Size = new System.Drawing.Size(200, 23);
             this.ArmorToggleButton.TabIndex = 1;
@@ -91,7 +95,7 @@ namespace TerrariaSpriteViewer
             "Grappling hook (Up)",
             "Grappling hook (Side)",
             "Grappling hook (Down)"});
-            this.AnimationTypeComboBox.Location = new System.Drawing.Point(12, 214);
+            this.AnimationTypeComboBox.Location = new System.Drawing.Point(12, 243);
             this.AnimationTypeComboBox.Name = "AnimationTypeComboBox";
             this.AnimationTypeComboBox.Size = new System.Drawing.Size(200, 21);
             this.AnimationTypeComboBox.TabIndex = 2;
@@ -99,7 +103,7 @@ namespace TerrariaSpriteViewer
             // 
             // StopAnimationButton
             // 
-            this.StopAnimationButton.Location = new System.Drawing.Point(154, 241);
+            this.StopAnimationButton.Location = new System.Drawing.Point(154, 270);
             this.StopAnimationButton.Name = "StopAnimationButton";
             this.StopAnimationButton.Size = new System.Drawing.Size(58, 23);
             this.StopAnimationButton.TabIndex = 3;
@@ -109,7 +113,7 @@ namespace TerrariaSpriteViewer
             // 
             // PlayAnimationButton
             // 
-            this.PlayAnimationButton.Location = new System.Drawing.Point(12, 241);
+            this.PlayAnimationButton.Location = new System.Drawing.Point(12, 270);
             this.PlayAnimationButton.Name = "PlayAnimationButton";
             this.PlayAnimationButton.Size = new System.Drawing.Size(58, 23);
             this.PlayAnimationButton.TabIndex = 4;
@@ -132,7 +136,7 @@ namespace TerrariaSpriteViewer
             this.ArmorHeadSelector.FormattingEnabled = true;
             this.ArmorHeadSelector.Location = new System.Drawing.Point(12, 94);
             this.ArmorHeadSelector.Name = "ArmorHeadSelector";
-            this.ArmorHeadSelector.Size = new System.Drawing.Size(200, 21);
+            this.ArmorHeadSelector.Size = new System.Drawing.Size(167, 21);
             this.ArmorHeadSelector.TabIndex = 6;
             this.ArmorHeadSelector.SelectedIndexChanged += new System.EventHandler(this.ArmorHeadSelector_SelectedIndexChanged);
             // 
@@ -142,7 +146,7 @@ namespace TerrariaSpriteViewer
             this.ArmorBodySelector.FormattingEnabled = true;
             this.ArmorBodySelector.Location = new System.Drawing.Point(12, 134);
             this.ArmorBodySelector.Name = "ArmorBodySelector";
-            this.ArmorBodySelector.Size = new System.Drawing.Size(200, 21);
+            this.ArmorBodySelector.Size = new System.Drawing.Size(167, 21);
             this.ArmorBodySelector.TabIndex = 8;
             this.ArmorBodySelector.SelectedIndexChanged += new System.EventHandler(this.ArmorBodySelector_SelectedIndexChanged);
             // 
@@ -161,7 +165,7 @@ namespace TerrariaSpriteViewer
             this.ArmorLegsSelector.FormattingEnabled = true;
             this.ArmorLegsSelector.Location = new System.Drawing.Point(12, 174);
             this.ArmorLegsSelector.Name = "ArmorLegsSelector";
-            this.ArmorLegsSelector.Size = new System.Drawing.Size(200, 21);
+            this.ArmorLegsSelector.Size = new System.Drawing.Size(167, 21);
             this.ArmorLegsSelector.TabIndex = 10;
             this.ArmorLegsSelector.SelectedIndexChanged += new System.EventHandler(this.ArmorLegsSelector_SelectedIndexChanged);
             // 
@@ -177,7 +181,7 @@ namespace TerrariaSpriteViewer
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 198);
+            this.label4.Location = new System.Drawing.Point(12, 227);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 13);
             this.label4.TabIndex = 11;
@@ -185,7 +189,7 @@ namespace TerrariaSpriteViewer
             // 
             // ChangeBackgroundButton
             // 
-            this.ChangeBackgroundButton.Location = new System.Drawing.Point(12, 620);
+            this.ChangeBackgroundButton.Location = new System.Drawing.Point(12, 649);
             this.ChangeBackgroundButton.Name = "ChangeBackgroundButton";
             this.ChangeBackgroundButton.Size = new System.Drawing.Size(200, 23);
             this.ChangeBackgroundButton.TabIndex = 12;
@@ -196,28 +200,17 @@ namespace TerrariaSpriteViewer
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 553);
+            this.label5.Location = new System.Drawing.Point(12, 582);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(58, 13);
             this.label5.TabIndex = 14;
             this.label5.Text = "Frame time";
             // 
-            // FrameTimeTrackbar
-            // 
-            this.FrameTimeTrackbar.Location = new System.Drawing.Point(12, 569);
-            this.FrameTimeTrackbar.Maximum = 50;
-            this.FrameTimeTrackbar.Minimum = 1;
-            this.FrameTimeTrackbar.Name = "FrameTimeTrackbar";
-            this.FrameTimeTrackbar.Size = new System.Drawing.Size(200, 45);
-            this.FrameTimeTrackbar.TabIndex = 13;
-            this.FrameTimeTrackbar.Value = 1;
-            this.FrameTimeTrackbar.ValueChanged += new System.EventHandler(this.FrameTimeTrackbar_ValueChanged);
-            // 
             // ReloadFilesButton
             // 
-            this.ReloadFilesButton.Location = new System.Drawing.Point(76, 241);
+            this.ReloadFilesButton.Location = new System.Drawing.Point(12, 201);
             this.ReloadFilesButton.Name = "ReloadFilesButton";
-            this.ReloadFilesButton.Size = new System.Drawing.Size(72, 23);
+            this.ReloadFilesButton.Size = new System.Drawing.Size(200, 23);
             this.ReloadFilesButton.TabIndex = 15;
             this.ReloadFilesButton.Text = "Reload files";
             this.ReloadFilesButton.UseVisualStyleBackColor = true;
@@ -250,11 +243,66 @@ namespace TerrariaSpriteViewer
             this.SelectTexturePackButton.UseVisualStyleBackColor = true;
             this.SelectTexturePackButton.Click += new System.EventHandler(this.SelectTexturePackButton_Click);
             // 
+            // ArmorHeadButton
+            // 
+            this.ArmorHeadButton.Location = new System.Drawing.Point(185, 93);
+            this.ArmorHeadButton.Name = "ArmorHeadButton";
+            this.ArmorHeadButton.Size = new System.Drawing.Size(27, 23);
+            this.ArmorHeadButton.TabIndex = 19;
+            this.ArmorHeadButton.Text = "<";
+            this.ArmorHeadButton.UseVisualStyleBackColor = true;
+            this.ArmorHeadButton.Click += new System.EventHandler(this.ArmorHeadButton_Click);
+            // 
+            // ArmorBodyButton
+            // 
+            this.ArmorBodyButton.Location = new System.Drawing.Point(185, 133);
+            this.ArmorBodyButton.Name = "ArmorBodyButton";
+            this.ArmorBodyButton.Size = new System.Drawing.Size(27, 23);
+            this.ArmorBodyButton.TabIndex = 20;
+            this.ArmorBodyButton.Text = "<";
+            this.ArmorBodyButton.UseVisualStyleBackColor = true;
+            this.ArmorBodyButton.Click += new System.EventHandler(this.ArmorBodyButton_Click);
+            // 
+            // ArmorLegsButton
+            // 
+            this.ArmorLegsButton.Location = new System.Drawing.Point(185, 173);
+            this.ArmorLegsButton.Name = "ArmorLegsButton";
+            this.ArmorLegsButton.Size = new System.Drawing.Size(27, 23);
+            this.ArmorLegsButton.TabIndex = 21;
+            this.ArmorLegsButton.Text = "<";
+            this.ArmorLegsButton.UseVisualStyleBackColor = true;
+            this.ArmorLegsButton.Click += new System.EventHandler(this.ArmorLegsButton_Click);
+            // 
+            // RefreshButton
+            // 
+            this.RefreshButton.Location = new System.Drawing.Point(76, 270);
+            this.RefreshButton.Name = "RefreshButton";
+            this.RefreshButton.Size = new System.Drawing.Size(72, 23);
+            this.RefreshButton.TabIndex = 22;
+            this.RefreshButton.Text = "Refresh";
+            this.RefreshButton.UseVisualStyleBackColor = true;
+            this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
+            // 
+            // FrameTimeTrackbar
+            // 
+            this.FrameTimeTrackbar.Location = new System.Drawing.Point(12, 598);
+            this.FrameTimeTrackbar.Maximum = 50;
+            this.FrameTimeTrackbar.Minimum = 1;
+            this.FrameTimeTrackbar.Name = "FrameTimeTrackbar";
+            this.FrameTimeTrackbar.Size = new System.Drawing.Size(200, 45);
+            this.FrameTimeTrackbar.TabIndex = 13;
+            this.FrameTimeTrackbar.Value = 1;
+            this.FrameTimeTrackbar.ValueChanged += new System.EventHandler(this.FrameTimeTrackbar_ValueChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(224, 655);
+            this.ClientSize = new System.Drawing.Size(224, 684);
+            this.Controls.Add(this.RefreshButton);
+            this.Controls.Add(this.ArmorLegsButton);
+            this.Controls.Add(this.ArmorBodyButton);
+            this.Controls.Add(this.ArmorHeadButton);
             this.Controls.Add(this.SelectTexturePackButton);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.TexturePackTextBox);
@@ -274,6 +322,8 @@ namespace TerrariaSpriteViewer
             this.Controls.Add(this.AnimationTypeComboBox);
             this.Controls.Add(this.ArmorToggleButton);
             this.Controls.Add(this.SpritePictureBox);
+            this.MaximumSize = new System.Drawing.Size(240, 723);
+            this.MinimumSize = new System.Drawing.Size(240, 723);
             this.Name = "MainForm";
             this.Text = "Terraria Sprite Viewer";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
@@ -306,6 +356,10 @@ namespace TerrariaSpriteViewer
         private System.Windows.Forms.TextBox TexturePackTextBox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button SelectTexturePackButton;
+        private System.Windows.Forms.Button ArmorHeadButton;
+        private System.Windows.Forms.Button ArmorBodyButton;
+        private System.Windows.Forms.Button ArmorLegsButton;
+        private System.Windows.Forms.Button RefreshButton;
     }
 }
 
